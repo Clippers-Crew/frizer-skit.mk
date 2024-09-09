@@ -12,17 +12,19 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/tags", "/api/tag"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class TagRestController {
     private final TagService tagService;
 
     public TagRestController(TagService tagService) {
         this.tagService = tagService;
     }
+
     @GetMapping()
     public List<TagSimpleDTO> getTags() {
         return tagService.getTags().stream().map(Tag::toDto).toList();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<TagSimpleDTO> getTag(@PathVariable Long id){
         return this.tagService.getTagById(id)

@@ -33,9 +33,6 @@ public interface SalonService {
     Optional<Salon> deleteReview(Review review);
     Optional<Salon> updateReview(Review review, Double oldReview);
 
-//    Optional<Salon> saveImage(Long id, MultipartFile image) throws IOException;
-//    Optional<Salon> saveImageWithId(Long id, Integer imageNo, MultipartFile image) throws IOException;
-
     List<Salon> filterSalons(String name, String city, Float distance, Float rating, String userLocation);
 
     List<String> getSalonsAsString(List<Salon> salons);

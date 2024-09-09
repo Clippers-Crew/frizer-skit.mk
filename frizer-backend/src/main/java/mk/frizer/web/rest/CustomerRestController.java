@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({ "/api/customers", "/api/customer" })
-@CrossOrigin(origins = { "localhost:3000", "localhost:3001" })
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class CustomerRestController {
     private final CustomerService customerService;
 
@@ -41,11 +41,10 @@ public class CustomerRestController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    // Does this even make sense?
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomerSimpleDTO> deleteCustomerById(@PathVariable Long id) {
        return this.customerService.deleteCustomerById(id)
                .map(customer -> ResponseEntity.ok().body(customer.toDto()))
-               .orElseGet(() -> ResponseEntity.badRequest().build());
+               .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

@@ -14,11 +14,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/users", "/api/user"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
-public class UserController {
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
+public class UserRestController {
     private final BaseUserService baseUserService;
 
-    public UserController(BaseUserService baseUserService) {
+    public UserRestController(BaseUserService baseUserService) {
         this.baseUserService = baseUserService;
     }
 
@@ -48,7 +48,6 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    //TODO send encrypted password from frontend, and decrypt it here with same key...
     @PostMapping("/edit-password/{id}")
     public ResponseEntity<BaseUserSimpleDTO> updatePasswordForUser(@PathVariable Long id, @RequestParam String password){
         return this.baseUserService.changeBaseUserPassword(id, password)
@@ -61,7 +60,7 @@ public class UserController {
         Optional<BaseUser> user = this.baseUserService.deleteBaseUserById(id);
         try{
             this.baseUserService.getBaseUserById(id);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         catch(UserNotFoundException exception){
             return ResponseEntity.ok().body(user.get().toDto());

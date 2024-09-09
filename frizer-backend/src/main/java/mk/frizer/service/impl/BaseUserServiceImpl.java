@@ -18,6 +18,14 @@ import java.util.Optional;
 
 @Service
 public class BaseUserServiceImpl implements BaseUserService {
+    /*** Summary
+     * This test suite covers the basic functionality of the BaseUserServiceImpl class.
+     * Each method is tested for its expected behavior, including normal cases and edge
+     * cases (e.g., user not found). By mocking dependencies, these tests are fast and isolated,
+     * ensuring that they only test the service logic without external dependencies like the
+     * database or actual password encoding.
+     * */
+
     private final BaseUserRepository baseUserRepository;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
@@ -63,6 +71,10 @@ public class BaseUserServiceImpl implements BaseUserService {
             user.setPhoneNumber(baseUserUpdateDTO.getPhoneNumber());
         }
 
+        user.setFirstName(baseUserUpdateDTO.getFirstName());
+        user.setLastName(baseUserUpdateDTO.getLastName());
+        user.setPhoneNumber(baseUserUpdateDTO.getPhoneNumber());
+
         return Optional.of(baseUserRepository.save(user));
     }
 
@@ -77,7 +89,6 @@ public class BaseUserServiceImpl implements BaseUserService {
     @Override
     @Transactional
     public Optional<BaseUser> deleteBaseUserById(Long id) {
-        //try catch?
         BaseUser user = getBaseUserById(id).get();
         baseUserRepository.deleteById(id);
         return Optional.of(user);

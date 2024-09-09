@@ -44,7 +44,7 @@ public class ImageServiceImpl implements ImageService {
             imageEntity = imageRepository.save(imageEntity);
 
             salon.get().setBackgroundImage(imageEntity.getId());
-//
+
             if (oldImageId != null) {
                 imageRepository.deleteById(oldImageId);
             }

@@ -13,7 +13,7 @@ import java.util.*;
 @Data
 @Entity
 @NoArgsConstructor
-public class BaseUser{// implements UserDetails {
+public class BaseUser{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +27,6 @@ public class BaseUser{// implements UserDetails {
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
-    private boolean isAccountNonExpired = true;
-    private boolean isAccountNonLocked = true;
-    private boolean isCredentialsNonExpired =  true;
-    private boolean isEnabled = true;
 
     public BaseUser(String email, String password, String firstName, String lastName, String phoneNumber) {
         this.email = email;
@@ -47,40 +43,9 @@ public class BaseUser{// implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.roles.add(role);
+        this.roles = Set.of(role);
 
     }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return roles;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return email;
-//    }
-//
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return isAccountNonExpired;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return isAccountNonLocked;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return isCredentialsNonExpired;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return isEnabled;
-//    }
 
     public BaseUserSimpleDTO toDto(){
         return BaseUserSimpleDTO.builder()

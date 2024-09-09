@@ -15,16 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final AppointmentRepository appointmentRepository;
     private final BaseUserRepository baseUserRepository;
-    private final ReviewRepository reviewRepository;
     private final SalonRepository salonRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, AppointmentRepository appointmentRepository, BaseUserRepository baseUserRepository, ReviewRepository reviewRepository, SalonRepository salonRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, BaseUserRepository baseUserRepository, SalonRepository salonRepository) {
         this.employeeRepository = employeeRepository;
-        this.appointmentRepository = appointmentRepository;
         this.baseUserRepository = baseUserRepository;
-        this.reviewRepository = reviewRepository;
         this.salonRepository = salonRepository;
     }
 
@@ -85,7 +81,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isEmpty())
             throw new EmployeeNotFoundException();
-//        appointmentRepository.deleteAll(employee.get().getAppointmentsActive());
         employeeRepository.deleteById(id);
         return employee;
     }

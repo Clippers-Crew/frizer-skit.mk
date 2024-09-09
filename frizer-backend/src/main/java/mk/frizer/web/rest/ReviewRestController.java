@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/reviews", "/api/review"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class ReviewRestController {
     private final ReviewService reviewService;
 
@@ -35,21 +35,12 @@ public class ReviewRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @PostMapping("/add-for-employee")
     @PostMapping("/add")
     public ResponseEntity<ReviewSimpleDTO> createReviewForEmployee(@RequestBody ReviewAddDTO reviewAddDto) {
         return this.reviewService.createReviewForEmployee(reviewAddDto)
                 .map(review -> ResponseEntity.ok().body(review.toDto()))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
-
-//    @PostMapping("/add-for-customer")
-//    public ResponseEntity<ReviewSimpleDTO> createReviewForCustomer(@RequestBody ReviewAddDTO reviewAddDto) {
-//        System.out.println(reviewAddDto);
-//        return this.reviewService.createReviewForCustomer(reviewAddDto)
-//                .map(review -> ResponseEntity.ok().body(review.toDto()))
-//                .orElseGet(() -> ResponseEntity.badRequest().build());
-//    }
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<ReviewSimpleDTO> updateReview(@PathVariable Long id, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
@@ -63,7 +54,7 @@ public class ReviewRestController {
         Optional<Review> review = this.reviewService.deleteReviewById(id);
         try{
             this.reviewService.getReviewById(id);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         catch(ReviewNotFoundException exception){
             return ResponseEntity.ok().body(review.get().toDto());

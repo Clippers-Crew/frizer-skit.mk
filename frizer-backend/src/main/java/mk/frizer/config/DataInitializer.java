@@ -36,6 +36,9 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
+        boolean init = false;
+        if (init) {
+
         List<String> all_cities = Arrays.asList(
                 "Цела Македонија", "Берово", "Битола", "Богданци", "Валандово", "Велес", "Виница", "Гевгелија",
                 "Гостивар", "Дебар", "Делчево", "Демир Капија", "Демир Хисар", "Кавадарци",
@@ -50,64 +53,88 @@ public class DataInitializer {
             }
         }
 
+            // Initialize the entities
+            baseUserService.createBaseUser(new BaseUserAddDTO("user1@email.com", "password", "Aleksandar", "Jovanovski", "071234567"));
+            baseUserService.createBaseUser(new BaseUserAddDTO("user2@email.com", "password", "Elena", "Petrova", "078765432"));
+            baseUserService.createBaseUser(new BaseUserAddDTO("user3@email.com", "password", "Igor", "Nikoloski", "070111222"));
+            baseUserService.createBaseUser(new BaseUserAddDTO("user4@email.com", "password", "Marija", "Georgieva", "072333444"));
+            baseUserService.createBaseUser(new BaseUserAddDTO("user5@email.com", "password", "Viktor", "Stojanovski", "075555666"));
 
-        boolean init = false;
-        if (init) {
-            baseUserService.createBaseUser(new BaseUserAddDTO("dario@email.com", "password", "Dario", "Delov", "phoneNumber"));
-            baseUserService.createBaseUser(new BaseUserAddDTO("sanja@email.com", "password", "Sanja", "Petkova", "numberPhone"));
-            baseUserService.createBaseUser(new BaseUserAddDTO("denis@email.com", "password", "Denis", "Ibraimi", "LycaMobile"));
-            baseUserService.createBaseUser(new BaseUserAddDTO("tajfun@email.com", "password", "Tajfun", "Ventilator", "telelink"));
-            baseUserService.createBaseUser(new BaseUserAddDTO("salon@email.com", "password", "Salon", "Biznis", "kabelnet"));
-            baseUserService.createBaseUser(new BaseUserAddDTO("toni@email.com", "password", "Toni", "Tarabov", "telekabel"));
-            BaseUser baseUser1 = baseUserService.getBaseUsers().get(0);
-            BaseUser baseUser2 = baseUserService.getBaseUsers().get(1);
-            BaseUser baseUser3 = baseUserService.getBaseUsers().get(2);
-            BaseUser baseUser4 = baseUserService.getBaseUsers().get(3);
-            BaseUser baseUser5 = baseUserService.getBaseUsers().get(4);
-            BaseUser baseUser6 = baseUserService.getBaseUsers().get(5);
+            // Get created users
+            List<BaseUser> baseUsers = baseUserService.getBaseUsers();
 
-            businessOwnerService.createBusinessOwner(baseUser1.getId());
-            businessOwnerService.createBusinessOwner(baseUser2.getId());
-            businessOwnerService.createBusinessOwner(baseUser3.getId());
-            BusinessOwner businessOwner1 = businessOwnerService.getBusinessOwners().get(0);
-            BusinessOwner businessOwner2 = businessOwnerService.getBusinessOwners().get(1);
-            BusinessOwner businessOwner3 = businessOwnerService.getBusinessOwners().get(2);
+            // Create Business Owners
+            baseUsers.forEach(user -> businessOwnerService.createBusinessOwner(user.getId()));
+            List<BusinessOwner> businessOwners = businessOwnerService.getBusinessOwners();
 
-            salonService.createSalon(new SalonAddDTO("Krc krc", "Berber", "doma", "Скопје", "broj", businessOwner1.getId(), (float) 42.0037876, (float) 21.9278854));
-            salonService.createSalon(new SalonAddDTO("Nenko", "Berber", "kaj komsiite", "Скопје", "broj1", businessOwner1.getId(), (float) 42.0586418, (float) 21.3176565));
-            salonService.createSalon(new SalonAddDTO("Kaj Shekspiro", "Frizerski salon za mazhi", "prilep", "Прилеп", "broj2", businessOwner2.getId(), (float) 41.4360468, (float) 22.0048696));
-            salonService.createSalon(new SalonAddDTO("Frizerski salon Asim", "Frizerski salon za mazhi", "veles", "Велес", "broj3", businessOwner1.getId(), (float) 41.4676689, (float) 22.0844239));
+            // Create Tags
+            tagService.createTag("Фризура");
+            tagService.createTag("Шишање");
+            tagService.createTag("Маникир");
+            tagService.createTag("Педикир");
+            tagService.createTag("Боење на коса");
 
-            Salon salon1 = salonService.getSalons().get(1);
-            Salon salon2 = salonService.getSalons().get(2);
+            List<Tag> tags = tagService.getTags();
 
-            treatmentService.createTreatment(new TreatmentAddDTO("mienje", salon1.getId(), 50.0, 1));
-            treatmentService.createTreatment(new TreatmentAddDTO("pedikir", salon2.getId(), 500.0, 2));
+            // Create 20 Salons with 2-3 treatments each
+            String[] salonNames = {
+                    "Фризерски салон Стил", "Салон за убавина Александра", "Фризерски студио Елит", "Студио за убавина Моника",
+                    "Фризерски салон Тина", "Салон за убавина Естетика", "Фризерски салон Коса", "Салон за убавина Гламур",
+                    "Фризерски салон Бисера", "Студио за убавина Оаза", "Фризерски салон Мартина", "Салон за убавина Софи",
+                    "Фризерски салон Елеганција", "Салон за убавина Мистик", "Фризерски студио Нина", "Салон за убавина Лукс",
+                    "Фризерски салон Ивона", "Салон за убавина Златен пресек", "Фризерски салон Перфекција", "Салон за убавина Ванеса"
+            };
 
-            Treatment treatment = treatmentService.getTreatments().get(1);
+            String[] addresses = {
+                    "Улица 1", "Улица 2", "Улица 3", "Улица 4", "Улица 5", "Улица 6", "Улица 7", "Улица 8", "Улица 9", "Улица 10",
+                    "Улица 11", "Улица 12", "Улица 13", "Улица 14", "Улица 15", "Улица 16", "Улица 17", "Улица 18", "Улица 19", "Улица 20"
+            };
 
-            tagService.createTag("Mienje");
-            tagService.createTag("Sisanje");
+            String[] cities = {
+                    "Скопје", "Прилеп", "Битола", "Охрид", "Велес", "Штип", "Тетово", "Куманово", "Струга", "Гостивар",
+                    "Кавадарци", "Кочани", "Гевгелија", "Кичево", "Крива Паланка", "Ресен", "Радовиш", "Струмица", "Дебар", "Виница"
+            };
 
-            Tag tag1 = tagService.getTags().get(0);
-            Tag tag2 = tagService.getTags().get(1);
+            float[][] coordinates = {
+                    {41.9981f, 21.4254f}, {41.3455f, 21.5550f}, {41.0328f, 21.3403f}, {41.1172f, 20.8016f},
+                    {41.7272f, 21.7750f}, {41.7420f, 22.1990f}, {42.0097f, 20.9716f}, {42.1322f, 21.7141f},
+                    {41.1783f, 20.6787f}, {41.8000f, 20.9062f}, {41.4326f, 21.9983f}, {41.9180f, 22.4189f},
+                    {41.1393f, 22.5049f}, {41.5146f, 20.9574f}, {42.2019f, 22.3318f}, {41.0883f, 21.0122f},
+                    {41.6383f, 22.4641f}, {41.4414f, 22.6420f}, {41.5245f, 20.5297f}, {41.8820f, 22.5075f}
+            };
 
-            salonService.addTagToSalon(new TagAddDTO(tag1.getId(), salon1.getId()));
-            salonService.addTagToSalon(new TagAddDTO(tag2.getId(), salon1.getId()));
-            salonService.addTagToSalon(new TagAddDTO(tag2.getId(), salon2.getId()));
+            for (int i = 0; i < salonNames.length; i++) {
+                BusinessOwner owner = businessOwners.get(i % businessOwners.size());
+                SalonAddDTO salonAddDTO = new SalonAddDTO(salonNames[i], "Салон за убавина", addresses[i], cities[i], "07000000" + i, owner.getId(), coordinates[i][0], coordinates[i][1]);
+                salonService.createSalon(salonAddDTO);
+            }
 
-            employeeService.createEmployee(new EmployeeAddDTO(baseUser4.getId(), salon2.getId()));
-            employeeService.createEmployee(new EmployeeAddDTO(baseUser5.getId(), salon2.getId()));
+            // Create 2-3 Treatments for each Salon
+            List<Salon> salons = salonService.getSalons();
+            for (Salon salon : salons) {
+                treatmentService.createTreatment(new TreatmentAddDTO("Шишање", salon.getId(), 300.0, 1));
+                treatmentService.createTreatment(new TreatmentAddDTO("Миење коса", salon.getId(), 150.0, 1));
+                if (salon.getId() % 2 == 0) {
+                    treatmentService.createTreatment(new TreatmentAddDTO("Боење коса", salon.getId(), 600.0, 1));
+                }
+            }
 
-            Employee employee1 = employeeService.getEmployees().get(0);
-            Employee employee2 = employeeService.getEmployees().get(1);
+            // Create Employees and assign them to Salons
+            for (BaseUser user : baseUsers) {
+                for (int i = 0; i < 4; i++) { // each user has 4 employees
+                    Salon salon = salons.get((int) (i + user.getId()) % salons.size());
+                    employeeService.createEmployee(new EmployeeAddDTO(user.getId(), salon.getId()));
+                }
+            }
 
-            Customer customer = customerService.getCustomers().getFirst();
-
-//            reviewService.createReviewForCustomer(new ReviewAddDTO(employee1.getId(), customer.getId(), 4.4, "Very nice customer"));
-            reviewService.createReviewForEmployee(new ReviewAddDTO(employee2.getId(), customer.getId(), 5.0, "The nicest employee"));
-            reviewService.createReviewForEmployee(new ReviewAddDTO(employee1.getId(), customer.getId(), 4.9, "Very nice employee"));
-
+            // Create Reviews
+            for (int i = 0; i < 5; i++) {
+                Salon salon = salons.get(i);
+                Customer customer = customerService.getCustomerByBaseUserId(baseUsers.get(i).getId()).get();
+                Employee employee = employeeService.getEmployeeByBaseUserId(customer.getId()).get();
+                reviewService.createReviewForEmployee(new ReviewAddDTO(employee.getId(), customer.getId(), 5.0, "Одлична услуга!"));
+            }
         }
     }
 }
+

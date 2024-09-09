@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/employees", "/api/employee" })
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class EmployeeRestController {
     private final EmployeeService employeeService;
 
@@ -45,6 +45,6 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeSimpleDTO> deleteEmployeeById(@PathVariable Long id) {
         return this.employeeService.deleteEmployeeById(id)
                 .map(employee -> ResponseEntity.ok().body(employee.toDto()))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

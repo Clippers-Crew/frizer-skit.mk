@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/owners", "/api/owner"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class BusinessOwnerRestController {
     private final BusinessOwnerService businessOwnerService;
 
@@ -44,7 +44,7 @@ public class BusinessOwnerRestController {
         Optional<BusinessOwner> user = this.businessOwnerService.deleteBusinessOwnerById(id);
         try{
             this.businessOwnerService.getBusinessOwnerById(id);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         catch(UserNotFoundException exception){
             return ResponseEntity.ok().body(user.get().toDto());

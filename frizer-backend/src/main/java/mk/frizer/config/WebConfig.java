@@ -19,6 +19,8 @@ public class WebConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers("/api/**")
+//                        .permitAll()
                 .anyRequest().permitAll()
         );
 

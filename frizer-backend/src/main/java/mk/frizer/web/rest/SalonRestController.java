@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/salons", "/api/salon"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class SalonRestController {
     private final SalonService salonService;
     private final ImageService imageService;
@@ -75,7 +75,6 @@ public class SalonRestController {
         }
     }
 
-
     @PostMapping("/{id}/upload-image")
     public ResponseEntity<SalonSimpleDTO> uploadImage(@PathVariable Long id, @RequestParam("image") MultipartFile image){
         try{
@@ -98,7 +97,6 @@ public class SalonRestController {
                 return ResponseEntity.ok(salon.get().toDto());
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
-//            return ResponseEntity.status(500).body("Image upload failed: ${e.message}")
         }
         return ResponseEntity.badRequest().build();
     }

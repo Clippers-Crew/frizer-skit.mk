@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
     private final SalonRepository salonRepository;
+
     public TagServiceImpl(TagRepository tagRepository, SalonRepository salonRepository) {
         this.tagRepository = tagRepository;
         this.salonRepository = salonRepository;
@@ -40,6 +41,7 @@ public class TagServiceImpl implements TagService {
     public Optional<Tag> createTag(String name) {
         return Optional.of(tagRepository.save(new Tag(name)));
     }
+
     @Override
     public List<Tag> getTagsForSalon(Long id) {
         Salon salon = salonRepository.findById(id)
@@ -48,6 +50,7 @@ public class TagServiceImpl implements TagService {
                 .filter(t->t.getSalonsWithTag().contains(salon)).collect(Collectors.toList());
         return  tagsForSalon;
     }
+
     @Override
     @Transactional
     public Optional<Tag> deleteTagById(Long id) {

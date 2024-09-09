@@ -74,7 +74,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Optional<Customer> addActiveAppointmentForCustomer(Appointment appointment) {
-        Customer customer = getCustomerById(appointment.getCustomer().getId()).get();
+//        Customer customer = getCustomerById(appointment.getCustomer().getId()).get();
+        Customer customer = appointment.getCustomer();
         customer.getAppointmentsActive().add(appointment);
         return Optional.of(customerRepository.save(customer));
     }
@@ -82,7 +83,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Optional<Customer> addHistoryAppointmentForCustomer(Appointment appointment) {
-        Customer customer = getCustomerById(appointment.getCustomer().getId()).get();
+//        Customer customer = getCustomerById(appointment.getCustomer().getId()).get();
+        Customer customer = appointment.getCustomer();
         customer.getAppointmentsActive().remove(appointment);
         customer.getAppointmentsHistory().add(appointment);
         appointment.setAttended(true);

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api/treatments", "/api/treatment"})
-@CrossOrigin(origins = {"localhost:3000","localhost:3001"})
+@CrossOrigin(origins = {"localhost:3000","localhost:3001", "localhost:8080"})
 public class TreatmentRestController {
     private final TreatmentService treatmentService;
 
@@ -54,7 +54,7 @@ public class TreatmentRestController {
         Optional<Treatment> treatment = this.treatmentService.deleteTreatmentById(id);
         try{
             this.treatmentService.getTreatmentById(id);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         catch(TreatmentNotFoundException exception){
             return ResponseEntity.ok().body(treatment.get().toDto());
