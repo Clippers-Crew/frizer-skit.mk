@@ -55,7 +55,7 @@ public class SalonRestControllerIT {
     @BeforeEach
     void setUp() {
         City city = new City("Skopje");  // Example city
-        //        BusinessOwner owner = new BusinessOwner("John Doe", "johndoe@example.com");  // Example owner
+        //        BusinessOwner owner = new BusinessOwner("John Doe", "johndoe@example.com");
 
         // Create the Salon object
         salon = new Salon(
