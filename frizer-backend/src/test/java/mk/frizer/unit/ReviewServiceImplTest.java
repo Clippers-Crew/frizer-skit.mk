@@ -90,7 +90,7 @@ class ReviewServiceImplTest {
 
         assertTrue(updatedReview.isPresent());
         assertEquals(4.0, updatedReview.get().getRating());
-        assertEquals("Updated review", updatedReview.get().getComment());
+        assertEquals("Updated Review", updatedReview.get().getComment());
         verify(reviewRepository, times(1)).save(any(Review.class));
         verify(applicationEventPublisher, times(1)).publishEvent(any(ReviewEditedEvent.class));
     }
